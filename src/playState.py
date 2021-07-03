@@ -1,10 +1,11 @@
-import pygame, time, player
+import pygame, time, player, apple
 
 class PlayState:
     def __init__(self, screen):
         self.screen = screen
         self.notQuit = True
         self.player = player.Player(self.screen)
+        self.apple = apple.Apple(self.screen)
 
     def update(self):
         for event in pygame.event.get():
@@ -15,6 +16,8 @@ class PlayState:
         self.screen.fill((0,0,0))
 
         self.player.update()
+        self.apple.update()
+        self.apple.draw()
         self.player.draw()
 
         pygame.display.flip()

@@ -7,7 +7,9 @@ class Player:
         self.screen = screen
         self.img_smiley = pygame.image.load('smiley.jpg')
         self.img_smiley = pygame.transform.scale(self.img_smiley, (self.size.x, self.size.y))
-        self.direction = 'right'
+        self.direction = 'left'
+        self.tailLength = 5
+        self.tail = [vector.Vector(400, 280)]*self.tailLength
 
     def getMoveDirection(self, event):
         if event.type == pygame.KEYDOWN:
@@ -31,16 +33,32 @@ class Player:
             self.pos.y = 0
 
     def update(self):
+        del self.tail[self.tailLength-1]
+
         if self.direction == 'left':
             self.pos.x -= self.size.x
+            self.tail.insert(0, vector.Vector(self.pos.x+self.size.x, self.pos.y))
         elif self.direction == 'right':
             self.pos.x += self.size.x
+            self.tail.insert(0, vector.Vector(self.pos.x-self.size.x, self.pos.y))
         elif self.direction == 'up':
             self.pos.y -= self.size.y
+            self.tail.insert(0, vector.Vector(self.pos.x, self.pos.y+self.size.y))
         else:
             self.pos.y += self.size.y
+            self.tail.insert(0, vector.Vector(self.pos.x, self.pos.y-self.size.y))
         
         self.checkGameOver()
 
     def draw(self):
         self.screen.blit(self.img_smiley, (self.pos.x, self.pos.y))
+        for i in range(self.tailLength):
+            self.screen.blit(self.img_smiley, (self.tail[i].x, self.tail[i].y))
+
+
+
+
+
+
+
+
