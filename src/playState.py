@@ -10,11 +10,14 @@ class PlayState:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.notQuit = False
-        return self.notQui 
+            self.player.getMoveDirection(event)
 
-        def draw(self):
-            self.screen.fill((0,0,0))
-            
-            self.player.draw()
+        self.screen.fill((0,0,0))
 
-            pygame.display.flip()
+        self.player.update()
+        self.player.draw()
+
+        pygame.display.flip()
+        
+        time.sleep(0.2)
+        return self.notQuit
