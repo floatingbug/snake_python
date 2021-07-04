@@ -6,6 +6,7 @@ class PlayState:
         self.notQuit = True
         self.player = player.Player(self.screen)
         self.apple = apple.Apple(self.screen)
+        self.nextState = 'playState'
 
     def update(self):
         for event in pygame.event.get():
@@ -15,8 +16,10 @@ class PlayState:
 
         self.screen.fill((0,0,0))
 
-        self.player.update()
-        self.apple.update()
+        #if game over player.update returns True
+        if self.player.update(self.apple.pos):
+            self.nextState = 'gameOverState'
+        self.apple.update(self.player.pos)
         self.apple.draw()
         self.player.draw()
 

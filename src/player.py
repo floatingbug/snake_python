@@ -31,8 +31,17 @@ class Player:
             self.pos.y = 560
         elif self.pos.y > 560:
             self.pos.y = 0
+        for tailPos in self.tail:
+            if self.pos.x == tailPos.x and self.pos.y == tailPos.y:
+                return True
+        return False
 
-    def update(self):
+    def eatApple(self, applePos):
+        if applePos.x == self.pos.x and applePos.y == self.pos.y:
+            self.tail.append(vector.Vector(self.pos.x, self.pos.y))
+            self.tailLength += 1
+
+    def update(self, applePos):
         del self.tail[self.tailLength-1]
 
         if self.direction == 'left':
@@ -47,8 +56,10 @@ class Player:
         else:
             self.pos.y += self.size.y
             self.tail.insert(0, vector.Vector(self.pos.x, self.pos.y-self.size.y))
-        
-        self.checkGameOver()
+       
+        self.eatApple(applePos)
+        if self.checkGameOver():
+            return True
 
     def draw(self):
         self.screen.blit(self.img_smiley, (self.pos.x, self.pos.y))

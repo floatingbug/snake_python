@@ -11,5 +11,6 @@ class Game:
     def start(self):
         while self.running:
             self.running = self.currState.update()
-            
+            if self.currState.nextState == 'gameOverState':
+                self.currState = gameOverState.GameOverState(self.screen) 
             
