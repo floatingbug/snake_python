@@ -10,7 +10,10 @@ class Player:
         self.direction = 'left'
         self.tailLength = 5
         self.tail = [vector.Vector(400, 280)]*self.tailLength
-
+        self.score = 0
+        self.font = pygame.font.Font("freesansbold.ttf", 32)
+        self.currScore = self.font.render("score: "+str(self.score), True, (255, 255, 255))
+      
     def getMoveDirection(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -31,15 +34,17 @@ class Player:
             self.pos.y = 560
         elif self.pos.y > 560:
             self.pos.y = 0
-        for tailPos in self.tail:
-            if self.pos.x == tailPos.x and self.pos.y == tailPos.y:
-                return True
+        for i in range(self.tailLength):
+            if self.pos.x == self.tail[i].x and self.pos.y == self.tail[i].y:
+                return True 
         return False
 
     def eatApple(self, applePos):
         if applePos.x == self.pos.x and applePos.y == self.pos.y:
             self.tail.append(vector.Vector(self.pos.x, self.pos.y))
             self.tailLength += 1
+            self.score += 1
+            self.currScore = self.font.render("score: "+str(self.score), True, (255, 255, 255))
 
     def update(self, applePos):
         del self.tail[self.tailLength-1]
@@ -57,12 +62,14 @@ class Player:
             self.pos.y += self.size.y
             self.tail.insert(0, vector.Vector(self.pos.x, self.pos.y-self.size.y))
        
-        self.eatApple(applePos)
         if self.checkGameOver():
-            return True
+            return True  
+        self.eatApple(applePos)
+        
 
     def draw(self):
         self.screen.blit(self.img_smiley, (self.pos.x, self.pos.y))
+        self.screen.blit(self.currScore, (600, 30))
         for i in range(self.tailLength):
             self.screen.blit(self.img_smiley, (self.tail[i].x, self.tail[i].y))
 

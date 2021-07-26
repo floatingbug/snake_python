@@ -1,4 +1,4 @@
-import pygame, vector, playState
+import pygame, vector, playState, gameOverState
 
 class Game:
     def __init__(self):
@@ -13,4 +13,3 @@ class Game:
             self.running = self.currState.update()
             if self.currState.nextState == 'gameOverState':
                 self.currState = gameOverState.GameOverState(self.screen) 
-            

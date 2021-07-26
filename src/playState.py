@@ -16,7 +16,7 @@ class PlayState:
 
         self.screen.fill((0,0,0))
 
-        #if game over player.update returns True
+        #if game over switch state
         if self.player.update(self.apple.pos):
             self.nextState = 'gameOverState'
         self.apple.update(self.player.pos)
