@@ -2,16 +2,17 @@ import pygame
 from os import path
 
 class GameOverState:
-    def __init__(self, screen, score):
-        self.score = score
+    def __init__(self, screen):
         self.notQuit = True
         self.font = pygame.font.Font('freesansbold.ttf', 32)
-        self.txt_score = self.font.render("SCORE: " + str(self.score) + " ", True, (255, 255, 255))
+        self.txt_score = self.font.render("SCORE", True, (255, 255, 255))
         self.screen = screen
         self.nextState = ''
-        self.highScore = 0
-        self.dirname = path.dirname(__file__)
-        with open(path.join(self.dirname, "highScore.txt"), 'w') as f:
+        self.highScore
+
+    def load_data(self):
+        dirname = path.dirname(__file__)
+        with open(path.join(dirname, highScore.txt), 'w') as f:
             try:
                 highScore = int(f.read())
             except:

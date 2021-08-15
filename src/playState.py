@@ -7,7 +7,8 @@ class PlayState:
         self.player = player.Player(self.screen)
         self.apple = apple.Apple(self.screen)
         self.nextState = 'playState'
-
+        self.score = 0
+    
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -17,6 +18,7 @@ class PlayState:
         self.screen.fill((0,0,0))
 
         #if game over switch state
+        self.score = self.player.score
         if self.player.update(self.apple.pos):
             self.nextState = 'gameOverState'
         self.apple.update(self.player.pos)
