@@ -13,3 +13,6 @@ class Game:
             self.running = self.currState.update()
             if self.currState.nextState == 'gameOverState':
                 self.currState = gameOverState.GameOverState(self.screen, self.currState.score) 
+            if self.currState.stateName == 'gameOverState':
+                if self.currState.nextState == 'playState':
+                    self.currState = playState.PlayState(self.screen)

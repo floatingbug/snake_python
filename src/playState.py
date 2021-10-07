@@ -6,9 +6,10 @@ class PlayState:
         self.notQuit = True
         self.player = player.Player(self.screen)
         self.apple = apple.Apple(self.screen)
-        self.nextState = 'playState'
+        self.nextState = ''
         self.score = 0
-    
+        self.stateName = 'playState'
+
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
